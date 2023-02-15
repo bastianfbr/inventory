@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Barcode Scanner',
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Colors.blue,
+        colorSchemeSeed: Colors.red,
       ),
       home: const AppMenu(),
     );
