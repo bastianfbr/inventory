@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:inventory/services/open_food_services.dart';
 
 class BarcodeScannerPage extends StatefulWidget {
   const BarcodeScannerPage({super.key});
@@ -13,8 +12,7 @@ class BarcodeScannerPage extends StatefulWidget {
 class BarcodeScannerPageState extends State<BarcodeScannerPage> {
   String barcode = '';
   Map<String, dynamic> product = {};
-
-  int currentPageIndex = 0;
+  OpenFoodServices openFoodServices = OpenFoodServices();
 
   Future<void> scanBarcode() async {
     String code = await FlutterBarcodeScanner.scanBarcode(
@@ -27,11 +25,10 @@ class BarcodeScannerPageState extends State<BarcodeScannerPage> {
       barcode = code;
     });
 
-    final response = await http.get(Uri.parse(
-        'https://world.openfoodfacts.org/api/v0/product/$barcode.json'));
-    if (response.statusCode == 200) {
+    var fetchedProduct = await openFoodServices.getProduct(barcode);
+    if (fetchedProduct != null) {
       setState(() {
-        product = jsonDecode(response.body)['product'];
+        product = fetchedProduct;
       });
     }
   }
