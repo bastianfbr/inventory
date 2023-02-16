@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:inventory/barcode_scanner_page.dart';
+import 'package:inventory/pages/barcode_scanner_page.dart';
 
 class AppMenu extends StatefulWidget {
   const AppMenu({super.key});
