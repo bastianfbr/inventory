@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:inventory/pages/barcode_scanner_page.dart';
+import 'package:inventory/services/barcode_scanner_provider.dart';
+import 'package:inventory/services/open_food_services.dart';
 
-class AppMenu extends StatefulWidget {
+class AppMenu extends ConsumerStatefulWidget {
   const AppMenu({super.key});
 
   @override
-  AppMenuState createState() => AppMenuState();
+  ConsumerState<AppMenu> createState() => AppMenuState();
 }
 
-class AppMenuState extends State<AppMenu> {
+class AppMenuState extends ConsumerState<AppMenu> {
   String barcode = '';
   Map<String, dynamic> product = {};
-
+  final openFoodServices = OpenFoodServices();
   int currentPageIndex = 0;
 
   @override
@@ -51,11 +54,23 @@ class AppMenuState extends State<AppMenu> {
       ][currentPageIndex],
       floatingActionButton: currentPageIndex == 0
           ? FloatingActionButton(
-              onPressed: () => showDialog(
-                  context: context, builder: ((context) => Container())),
-              tooltip: 'Add Item',
+              onPressed: () async {
+                final scanner = ref.read(barcodeScannerProvider);
+                final code = await scanner.scanBarcode();
+                setState(() {
+                  barcode = code;
+                });
+
+                var fetchedProduct = await openFoodServices.getProduct(barcode);
+                if (fetchedProduct != null) {
+                  setState(() {
+                    product = fetchedProduct;
+                  });
+                }
+              },
+              tooltip: 'Scan Barcode',
               child: const Icon(
-                Icons.add,
+                Icons.barcode_reader,
                 size: 30,
               ),
             )
