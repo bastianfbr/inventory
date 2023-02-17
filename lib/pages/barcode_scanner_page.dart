@@ -46,7 +46,9 @@ class BarcodeScannerPageState extends ConsumerState<BarcodeScannerPage> {
             child: const Text('Scan Barcode'),
           ),
           const SizedBox(height: 30),
-          product.isNotEmpty ? ProductView(product: product) : Container(),
+          product.isNotEmpty
+              ? ProductView(product: product)
+              : const Text('Product not found'),
         ],
       ),
     );
