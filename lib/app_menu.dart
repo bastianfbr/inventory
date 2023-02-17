@@ -49,7 +49,7 @@ class AppMenuState extends ConsumerState<AppMenu> {
         ],
       ),
       body: <Widget>[
-        const BarcodeScannerPage(),
+        BarcodeScannerPage(product),
         Container(),
       ][currentPageIndex],
       floatingActionButton: currentPageIndex == 0
