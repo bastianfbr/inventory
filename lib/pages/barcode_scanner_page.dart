@@ -1,26 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:inventory/services/products_notifier.dart';
 import 'package:inventory/views/product_view.dart';
 
-class BarcodeScannerPage extends ConsumerStatefulWidget {
-  final Map<String, dynamic> product;
+final productsProvider =
+    StateNotifierProvider<ProductsNotifier, List<Map<String, dynamic>>>(
+        (ref) => ProductsNotifier());
 
-  const BarcodeScannerPage(this.product, {Key? key}) : super(key: key);
+class BarcodeScannerPage extends HookConsumerWidget {
+  const BarcodeScannerPage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<BarcodeScannerPage> createState() => BarcodeScannerPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final products = ref.watch(productsProvider);
 
-class BarcodeScannerPageState extends ConsumerState<BarcodeScannerPage> {
-  @override
-  Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          widget.product.isNotEmpty
-              ? ProductView(product: widget.product)
-              : Container(),
+          if (products.isNotEmpty)
+            Expanded(
+              child: ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  return ProductView(product: product);
+                },
+              ),
+            )
+          else
+            const Text('No products scanned yet'),
         ],
       ),
     );
