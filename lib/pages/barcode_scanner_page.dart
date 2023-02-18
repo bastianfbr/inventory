@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:inventory/services/products_notifier.dart';
 import 'package:inventory/views/product_view.dart';
+import 'package:inventory/models/product.dart';
 
-final productsProvider =
-    StateNotifierProvider<ProductsNotifier, List<Map<String, dynamic>>>(
-        (ref) => ProductsNotifier());
+final productsProvider = StateNotifierProvider<ProductsNotifier, List<Product>>(
+    (ref) => ProductsNotifier());
 
 class BarcodeScannerPage extends HookConsumerWidget {
   const BarcodeScannerPage({Key? key}) : super(key: key);
