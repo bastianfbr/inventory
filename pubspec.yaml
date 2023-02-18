@@ -38,6 +38,7 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   http: ^0.13.5
   hooks_riverpod: ^2.2.0
+  nanoid: ^1.0.0
 
 dev_dependencies:
   flutter_test:
