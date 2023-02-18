@@ -18,16 +18,9 @@ class BarcodeScannerPageState extends ConsumerState<BarcodeScannerPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Text(
-            'Scan a barcode to get product information',
-            style: TextStyle(fontSize: 20),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 30),
-          const SizedBox(height: 30),
           widget.product.isNotEmpty
               ? ProductView(product: widget.product)
-              : const Text('Product not found'),
+              : Container(),
         ],
       ),
     );
