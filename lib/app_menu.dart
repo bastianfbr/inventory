@@ -15,7 +15,7 @@ class AppMenu extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Barcode Scanner',
+          'Inventory App',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         elevation: 20,
